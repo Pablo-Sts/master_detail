@@ -1,101 +1,156 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+
+type Course = {
+  id: number;
+  institutionId: number;
+  courseTypeId: number;
+  description: string;
+};
+
+type Subject = {
+  id: number;
+  courseId: number;
+  subjectTypeId: number;
+  acronym: string;
+  description: string;
+  period: number;
+  workload: number;
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const baseUrl: string = "http://localhost:3001";
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const [courseId, setCouseId] = useState<number>(-1);
+  const [courses, setCourses] = useState<Course[]>();
+  const [loadingCourses, setLoadingCourses] = useState<Boolean>(true);
+
+  const [subjects, setSubjects] = useState<Subject[]>();
+  const [loadingSubjects, setLoadingSubjects] = useState<Boolean>(false);
+
+  async function getCouses() {
+    await fetch(`${baseUrl}/course`)
+      .then((response) => response.json())
+      .then((data) => setCourses(data));
+
+    setLoadingCourses(false);
+  }
+
+  async function getSubjects() {
+    console.log(courseId);
+    await fetch(`${baseUrl}/subject/course/${courseId}`)
+      .then((response) => response.json())
+      .then((data) => setSubjects(data));
+
+    setLoadingSubjects(false);
+  }
+
+  useEffect(() => {
+    if (loadingCourses) {
+      getCouses();
+    }
+
+    if (loadingSubjects) {
+      getSubjects();
+    }
+  }, [loadingSubjects]);
+
+  return (
+    <>
+      <header className="flex justify-center p-4 border-b-[.5px] border-zinc-600">
+        <h1 className="text-xl font-bold">
+          MESTRE DETALHE: DISCIPLINAS X CURSOS
+        </h1>
+      </header>
+      <main className="flex flex-col items-center w-full h-[85vh] mt-6 gap-16">
+        <div className="flex flex-col gap-2 w-[60vw] items-center h-[50px]">
+          <label htmlFor="cursos" className="font-bold text-xl">
+            CURSOS
+          </label>
+          <select
+            name="cursos"
+            id="cursos"
+            value={courseId}
+            onChange={(event) => {
+              setCouseId(+event.target.value);
+              if (+event.target.value !== -1) {
+                setLoadingSubjects(true);
+              } else {
+                setSubjects(undefined);
+              }
+            }}
+            className="flex text-lg text-center min-w-full p-2 rounded-lg bg-transparent border border-zinc-500"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <option value={-1} className="bg-zinc-950">
+              Selecione um curso
+            </option>
+            {courses?.map((course: Course) => {
+              return (
+                <option
+                  value={course.id}
+                  key={course.id}
+                  className="bg-zinc-950"
+                >
+                  {course.description}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="flex flex-col text-center w-full">
+          <label htmlFor="disciplinas" className="font-bold text-xl">
+            DISCIPLINAS
+          </label>
+          <table className="flex flex-col w-full p-10">
+            <thead className="flex w-full justify-around">
+              <tr className="flex w-full justify-around border border-zinc-500 p-2">
+                <th className="w-1/12">ID</th>
+                <th className="w-1/12">Sigla</th>
+                <th className="w-7/12">Descrição</th>
+                <th className="w-1/12">Período</th>
+                <th className="w-1/6">Carga Horária</th>
+              </tr>
+            </thead>
+            <tbody>
+              {!subjects && (
+                <tr className="flex w-full items-center justify-center p-2 text-xl">
+                  <td>Selecione um curso para visualizar as disciplinas</td>
+                </tr>
+              )}
+
+              {subjects?.length === 0 && (
+                <tr className="flex w-full items-center justify-center p-2 text-xl">
+                  <td>Não há disciplinas cadastradas para o curso selecionado</td>
+                </tr>
+              )}
+
+              {subjects &&
+                subjects.map((subject, index) => {
+                  return (
+                    <tr className={`flex w-full justify-around border border-zinc-500 p-2 ${index%2 === 0 && "bg-zinc-900"}`}key={subject.id}>
+                      <td className="flex items-center justify-center w-1/12">
+                        {subject.id}
+                      </td>
+                      <td className="flex items-center justify-center w-1/12">
+                        {subject.acronym}
+                      </td>
+                      <td className="flex items-center justify-center w-7/12">
+                        {subject.description}
+                      </td>
+                      <td className="flex items-center justify-center w-1/12">
+                        {subject.period}
+                      </td>
+                      <td className="flex items-center justify-center w-1/6">
+                        {subject.workload}h
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </>
   );
 }
