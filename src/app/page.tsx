@@ -20,7 +20,7 @@ type Subject = {
 };
 
 export default function Home() {
-  const baseUrl: string = "http://localhost:3001";
+  const baseUrl = process.env.NEXT_PUBLIC_API;
 
   const [courseId, setCouseId] = useState<number>(-1);
   const [courses, setCourses] = useState<Course[]>();
