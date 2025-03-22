@@ -1,4 +1,4 @@
-# Table disciplinas
+# Master Detail
 
 <div align="center">
 
