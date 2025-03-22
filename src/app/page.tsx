@@ -38,7 +38,6 @@ export default function Home() {
   }
 
   async function getSubjects() {
-    console.log(courseId);
     await fetch(`${baseUrl}/subject/course/${courseId}`)
       .then((response) => response.json())
       .then((data) => setSubjects(data));
