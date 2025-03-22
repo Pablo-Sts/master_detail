@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Table disciplinas
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+<img src="./.gitassets/capa.png" width="350px"/>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<div data-badges>
+ 
+ <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/pablo-sts/college_api?style=for-the-badge">
+ <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/stars/pablo-sts/college_api?style=for-the-badge">
+ <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/forks/pablo-sts/college_api?style=for-the-badge">
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+</div>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<div data-badges>
+ <img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+ <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
+ <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+ <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
+</div>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+</div>
 
-## Learn More
+## Descrição do Projeto:
 
-To learn more about Next.js, take a look at the following resources:
+O projeto `master_detail` é uma aplicação frontend construída com o framework Next.js, utilizando Tailwind CSS para estilização e TypeScript para garantir a tipagem estática do código. Seu principal objetivo é consumir os dados da API [college_api](https://github.com/Pablo-Sts/college_api) e apresentá-los de forma organizada e interativa para o usuário.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Funcionalidades Principais:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Listagem de Disciplinas: A aplicação exibe uma lista de disciplinas em um componente select, permitindo que o usuário escolha uma disciplina específica.
+- Tabela de Matérias: Ao selecionar uma disciplina, a aplicação exibe uma tabela com os dados das matérias relacionadas a essa disciplina, consumindo os dados da API college_api.
+- Interface Intuitiva: A aplicação possui uma interface limpa e intuitiva, facilitando a navegação e a compreensão dos dados.
 
-## Deploy on Vercel
+## Tecnologias Utilizadas:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Next.js: Um framework React para construção de aplicações web com renderização do lado do servidor (SSR) e geração de sites estáticos (SSG).
+- Tailwind CSS: Um framework CSS utilitário que permite estilizar a interface de forma rápida e eficiente.
+- TypeScript: Uma linguagem de programação que adiciona tipagem estática ao JavaScript, melhorando a segurança e a manutenibilidade do código.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+##  Objetivo do Projeto:
+
+O projeto `master_detail` foi desenvolvido como requisito para a disciplina de Programação III, com o objetivo de demonstrar os conhecimentos adquiridos em desenvolvimento de aplicações frontend com Next.js, consumo de APIs e estilização com Tailwind CSS. A aplicação serve como um exemplo prático de como construir uma interface para exibir dados de uma API, atendendo às necessidades de um sistema de gerenciamento acadêmico.
+
+
+## Como rodar esse projeto
+
+### Requisitos
+
+- Node.js instalado
+
+### Execução
+
+1. Clone esse repositório
+
+    ```sh
+    git clone https://github.com/Pablo-Sts/master_detail
+    ```
+
+2. Acesse o diretório do projeto: 
+
+    ```sh
+    cd master_detail
+    ```
+
+3. Copie as variáveis de ambiente listads e crie um arquivo `.env` e preencha com as seguintes informações:
+
+    ```sh
+     NEXT_PUBLIC_API =
+    ```
+
+5. Instale as dependênciads do projeto com o comando `npm i`.
+
+6. Abra um terminal na pasta do projeto e execute o comando `npm run dev` para executar o projeto.
+
+## Preview
+
+![Requisição na endpoint de cursos](./.gitassets/1.png)
+![Requisição na endpoint de cursos](./.gitassets/2.png)
+![Requisição na endpoint de cursos](./.gitassets/3.png)
+
+## Links úteis
+
+- [Next JS](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
