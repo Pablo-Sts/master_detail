@@ -74,9 +74,9 @@ O projeto `master_detail` foi desenvolvido como requisito para a disciplina de P
 
 ## Preview
 
-![Requisição na endpoint de cursos](./.gitassets/1.png)
 ![Requisição na endpoint de cursos](./.gitassets/2.png)
 ![Requisição na endpoint de cursos](./.gitassets/3.png)
+![Requisição na endpoint de cursos](./.gitassets/4.png)
 
 ## Links úteis
 
